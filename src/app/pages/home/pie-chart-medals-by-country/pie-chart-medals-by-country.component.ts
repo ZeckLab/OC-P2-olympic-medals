@@ -2,9 +2,10 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { Olympic } from 'src/app/core/models/Olympic';
 
 @Component({
-  selector: 'app-pie-chart-medals-by-country',
-  templateUrl: './pie-chart-medals-by-country.component.html',
-  styleUrl: './pie-chart-medals-by-country.component.scss'
+    selector: 'app-pie-chart-medals-by-country',
+    templateUrl: './pie-chart-medals-by-country.component.html',
+    styleUrl: './pie-chart-medals-by-country.component.scss',
+    standalone: false
 })
 export class PieChartMedalsByCountryComponent implements OnChanges{
   @Input() data: Olympic[] = [];
