@@ -1,0 +1,24 @@
+.ngx-charts-tooltip-content.type-tooltip {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.tooltip-country {
+    margin: 0.25rem;
+}
+
+.tooltip-medal {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+    padding: 0.25rem;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 12px;
+        height: 12px;
+    }
+    
+}

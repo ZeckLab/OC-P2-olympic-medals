@@ -1,5 +1,24 @@
-<h2>Olympic games app</h2>
-<hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<section class="home-intro">
+  <h1>Tableau de bord des Jeux Olympiques</h1>
+  <p>
+    Explorez les performances des pays lors des précédentes éditions des Jeux
+    Olympiques grâce à ce tableau de bord interactif.
+  </p>
+  <p>
+    Le graphique ci-dessous vous présente le
+    <strong>nombre total de médailles remportées par chaque pays</strong>,
+    toutes années confondues.
+  </p>
+  <p class="home-click-instruction">
+    👉 Cliquez sur une <strong>portion du graphique</strong> pour accéder aux
+    statistiques détaillées d'un pays.
+  </p>
+</section>
 
-<app-pie-chart-medals-by-country [data]="olympicsData"></app-pie-chart-medals-by-country>
+<section class="home-chart">
+  @if(olympicsData.length > 0) {
+  <app-pie-chart-medals-by-country [data]="olympicsData" />
+  } @else {
+  <p class="home-error">Un problème est survenu dans le chargement des données.</p>
+  }
+</section>

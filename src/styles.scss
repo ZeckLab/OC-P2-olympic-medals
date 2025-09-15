@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+.ngx-charts-tooltip-content.type-tooltip {
+  background-color: rgb(4, 131, 143, 1) !important;
+  color: white !important;
+  font-family: "Roboto", Arial, Helvetica, sans-serif !important;
+  padding: 0.25rem 0.375rem !important;
+  font-size: 0.865rem !important;
+  letter-spacing: 1px !important;
+}
+
+.pie-label {
+  font-size: 14px !important;
+  font-family: "Roboto", Arial, Helvetica, sans-serif !important;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem !important;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.625rem !important;
+  }
+}
+
+p {
+  margin: 0;
+}
