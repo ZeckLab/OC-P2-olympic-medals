@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
 
   private loadOlympics(): void {
   this.olympics$?.subscribe((data) => {
-    console.log('****Données des jeux olympiques reçues dans le component home :', data);
     if (data) {
       this.olympicsData = data;
     }

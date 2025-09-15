@@ -1,12 +1,19 @@
 <ngx-charts-pie-chart
   [results]="pieDataMedalsByCountry"
-  [legend]="true"
+  [legend]="false"
   [labels]="true"
   [maxLabelLength]="20"
   [doughnut]="false"
   [explodeSlices]="false"
   [tooltipDisabled]="false"
   [animations]="true"
-  [view]="[900, 500]">
+  [view]="view"
+>
+  <ng-template #tooltipTemplate let-model="model">
+    <span class="tooltip-country">{{ model.name }}</span>
+    <div class="tooltip-medal">
+      <img src="assets/images/white-medal.png" />
+      <p class="tooltip-count-medals">{{ model.value }}</p>
+    </div>
+  </ng-template>
 </ngx-charts-pie-chart>
-
