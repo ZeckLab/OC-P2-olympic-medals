@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, of, Observable } from 'rxjs';
+import { catchError, tap, map, filter } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -31,4 +33,37 @@ export class OlympicService {
   getOlympics() {
     return this.olympics$.asObservable();
   }
+
+  getCountryCount(): Observable<number> {
+    return this.getOlympics().pipe(
+      filter((olympics): olympics is Olympic[] => olympics !== null),
+      map(olympics => olympics.length)
+    );
+  }
+
+  getParticipationCount(): Observable<number> {
+    return this.getOlympics().pipe(
+      filter((olympics): olympics is Olympic[] => olympics !== null),
+      map(olympics => olympics[0].participations.length)
+    );
+  }
+
+  getPieDataMedalsByCountry(): Observable<{ name: string; value: number }[]> {
+    return this.getOlympics().pipe(
+      filter((olympics): olympics is Olympic[] => olympics !== null),
+      map(olympics =>
+        olympics.map(olympic => ({
+          name: olympic.country,
+          value: olympic.participations.reduce(
+            (sum, participation) => sum + participation.medalsCount,0
+        )
+      }))
+    )
+  );
 }
+
+
+
+}
+
+

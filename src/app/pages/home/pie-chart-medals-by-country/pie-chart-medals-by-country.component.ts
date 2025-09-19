@@ -9,23 +9,11 @@ import { HostListener } from '@angular/core';
   standalone: false,
 })
 export class PieChartMedalsByCountryComponent implements OnChanges {
-  @Input() data: Olympic[] = [];
+  @Input() pieDataMedalsByCountry: { name: string; value: number }[] = [];
   view: [number, number] = [880, 500];
 
-  pieDataMedalsByCountry: { name: string; value: number }[] = [];
-
   ngOnChanges(): void {
-    this.preparePieDataMedalsByCountry();
     this.setResponsiveView(window.innerWidth);
-  }
-
-  private preparePieDataMedalsByCountry(): void {
-    this.pieDataMedalsByCountry = this.data.map((country) => ({
-      name: country.country,
-      value: country.participations.reduce(
-        (sum, participation) => sum + participation.medalsCount, 0
-      ),
-    }));
   }
 
   @HostListener('window:resize', ['$event'])
