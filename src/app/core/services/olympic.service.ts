@@ -14,16 +14,28 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   // Holds Olympic data fetched from API. Null = not loaded or error.
   private olympics$ = new BehaviorSubject<Olympic[] | null>(null);
+  private hasValidData$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {}
 
   loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
+      map(olympics => {
+        const isValid = this.isConsistentData(olympics);
+        this.hasValidData$.next(isValid);
+        if (!isValid) {
+          console.error('The data is inconsistent and prevents chart generation.');
+          return null;
+        }
+
+        return olympics;
+      }),
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         // TODO: improve error handling
         console.error('An error occurred while loading Olympic data.', error);
         // can be useful to end loading state and let the user know something went wrong
+        this.hasValidData$.next(false);
         this.olympics$.next(null);
         return of(null);
       })
@@ -32,6 +44,10 @@ export class OlympicService {
 
   getOlympics() {
     return this.olympics$.asObservable();
+  }
+
+  getHasValidData(): Observable<boolean> {
+  return this.hasValidData$.asObservable();
   }
 
   // ******* New methods to get global stats and pie chart data *******
@@ -130,4 +146,24 @@ export class OlympicService {
   private findCountryData(name: string, olympics: Olympic[]): Olympic | undefined {
     return olympics.find((olympic) => olympic.country.toLowerCase() === name.toLowerCase());
   }
+
+  private isConsistentData(olympics: Olympic[] | null): boolean {
+    if (!olympics || olympics.length === 0) return false;
+
+    const referenceYears = olympics[0].participations.map(participation => participation.year).sort();
+
+    const allSameCount = olympics.every(olympic => olympic.participations.length === referenceYears.length);
+    if (!allSameCount) return false;
+
+    const isConsistent = referenceYears.every(
+      year => olympics.every(
+        olympic => olympic.participations.some(
+          participation => participation.year === year
+        )
+      )
+    );
+
+    return isConsistent;
+  }
+
 }
