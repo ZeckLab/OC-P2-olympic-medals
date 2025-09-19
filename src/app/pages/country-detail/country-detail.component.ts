@@ -4,7 +4,8 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Observable, EMPTY } from 'rxjs';
 import { ChartData } from 'src/app/core/models/ChartData';
 import { CountryStats } from 'src/app/core/models/Stats';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { shareReplay, switchMap, tap } from 'rxjs/operators';
+
 
 
 @Component({  
@@ -24,29 +25,20 @@ export class CountryDetailComponent implements OnInit {
     this.country = this.route.snapshot.paramMap.get('country') || '';
 
     const countryExists$ = this.olympicService.countryExists(this.country).pipe(
+      tap(exists => {
+        if (!exists) {
+          this.router.navigate(['/not-found']);
+        }
+      }),
       shareReplay(1)
     );
 
     this.barDataForCountryMedalsByParticipation$ = countryExists$.pipe(
-      switchMap(exists => {
-        if (!exists) {
-          this.router.navigate(['/not-found']);
-          return EMPTY;
-      }
-
-      return this.olympicService.getBarChartDataForCountryMedalsByParticipation(this.country);
-      })
+      switchMap(exists => exists ? this.olympicService.getBarChartDataForCountryMedalsByParticipation(this.country) : EMPTY)
     );
 
-
     this.countryStats$ = countryExists$.pipe(
-      switchMap(exists => {
-        if (!exists) {
-          this.router.navigate(['/not-found']);
-          return EMPTY;
-      }
-      return this.olympicService.getCountryStats(this.country);
-      })
+      switchMap(exists => exists ? this.olympicService.getCountryStats(this.country) : EMPTY)
     );
   }
 }

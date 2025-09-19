@@ -10,6 +10,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 export class HomeComponent {
   pieDataMedalsByCountry$ = this.olympicService.getPieChartDataForMedalsByCountry();
   globalStats$ = this.olympicService.getGlobalStats();
+  hasData$ = this.olympicService.getHasValidData();
 
   constructor(private olympicService: OlympicService) {}
 }
