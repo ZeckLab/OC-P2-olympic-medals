@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { HostListener } from '@angular/core';
+import { ChartData } from 'src/app/core/models/ChartData';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pie-chart-medals-by-country',
@@ -9,8 +11,13 @@ import { HostListener } from '@angular/core';
   standalone: false,
 })
 export class PieChartMedalsByCountryComponent implements OnChanges {
-  @Input() pieDataMedalsByCountry: { name: string; value: number }[] = [];
+  @Input() pieDataMedalsByCountry: ChartData[] = [];
   view: [number, number] = [880, 500];
+  showLegend = false;
+  showLabels = true;
+  maxLabelLength = 20;
+
+  constructor(private router: Router) {}
 
   ngOnChanges(): void {
     this.setResponsiveView(window.innerWidth);
@@ -27,4 +34,13 @@ export class PieChartMedalsByCountryComponent implements OnChanges {
     const chartHeight = Math.round(chartWidth * 0.57);
     this.view = [chartWidth, chartHeight];
   }
+
+  onSelect(event: any): void {
+    const countryName = event?.name;
+    if (countryName) {
+      const formatted = countryName.toLowerCase(); // ou encodeURIComponent si besoin
+      this.router.navigate(['/country-detail', formatted]);
+    }
+  }
+
 }

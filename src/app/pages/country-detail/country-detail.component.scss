@@ -1,73 +1,36 @@
-.home-intro {
-  background-color: #f5f5f5;
-  padding: 1rem 1.5rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+.country-detail-header {
+    margin-left : 1rem;
 
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-
-  p {
+  .back-link {
+    color: #04838f;
+    text-decoration: none;
     font-size: 1.1rem;
-    line-height: 1.6;
-    color: #333;
-    margin-bottom: 1rem;
-    max-width: 600px;
-    margin: 1rem auto;
-    text-align: center;
+    font-weight: bold;
+    margin-right: 1rem;
+    line-height: 1;
 
-    strong {
-      font-weight: 600;
-    }
-  }
-
-  .home-click-instruction {
-    font-style: italic;
-    color: #666;
-    font-size: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-
-    h1 {
-      font-size: 1.6rem;
-    }
-
-    p {
-      font-size: 1rem;
-    }
-
-    .home-click-instruction {
-      font-size: 0.95rem;
+    &:hover {
+      text-decoration: underline;
     }
   }
 
   @media (max-width: 480px) {
-    h1 {
-      font-size: 1.4rem;
-    }
-
-    p {
+    margin-left : 0.5rem;
+    
+    .back-link {
       font-size: 0.95rem;
-    }
-
-    .home-click-instruction {
-      font-size: 0.9rem;
+      margin-right: 0.5rem;
     }
   }
 }
 
-.home-summary {
+.country-summary {
   margin: auto;
   text-align: center;
 
   h2 {
     display: inline-block;
-  padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem;
 
     font-size: 1.5rem;
     margin: 1.5rem 0;
@@ -77,7 +40,7 @@
     background-color: #04838f;
   }
 
-  .global-stats {
+  .country-stats {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -110,7 +73,7 @@
       font-size: 1.3rem;
     }
 
-    .global-stats {
+    .country-stats {
       gap: 1rem;
 
       .stat-card {
@@ -130,9 +93,11 @@
   @media (max-width: 480px) {
     h2 {
       font-size: 1.1rem;
+      padding: 0.4rem 0.8rem;
+      margin: 1rem 0;
     }
 
-    .global-stats {
+    .country-stats {
       gap: 0.5rem;
 
       .stat-card {
@@ -151,11 +116,19 @@
   }
 }
 
-.home-chart {
+.country-chart {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2rem;
 
-  .home-error {
+  p {
+    font-weight: bold;
+    color: #04838f;
+  }
+
+  .country-error {
     color: red;
     font-weight: bold;
     margin-top: 5rem;
