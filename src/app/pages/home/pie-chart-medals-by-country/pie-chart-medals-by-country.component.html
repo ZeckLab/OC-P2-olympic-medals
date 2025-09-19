@@ -1,13 +1,10 @@
 <ngx-charts-pie-chart
   [results]="pieDataMedalsByCountry"
-  [legend]="false"
-  [labels]="true"
-  [maxLabelLength]="20"
-  [doughnut]="false"
-  [explodeSlices]="false"
-  [tooltipDisabled]="false"
-  [animations]="true"
+  [legend]="showLegend"
+  [labels]="showLabels"
+  [maxLabelLength]="maxLabelLength"
   [view]="view"
+  (select)="onSelect($event)"
 >
   <ng-template #tooltipTemplate let-model="model">
     <span class="tooltip-country">{{ model.name }}</span>

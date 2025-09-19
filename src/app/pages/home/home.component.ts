@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { Olympic } from 'src/app/core/models/Olympic';
 
 @Component({
     selector: 'app-home',
@@ -10,9 +8,8 @@ import { Olympic } from 'src/app/core/models/Olympic';
     standalone: false
 })
 export class HomeComponent {
-  pieDataMedalsByCountry$ = this.olympicService.getPieDataMedalsByCountry();
-  countryCount$ = this.olympicService.getCountryCount();
-  participationCount$ = this.olympicService.getParticipationCount();
+  pieDataMedalsByCountry$ = this.olympicService.getPieChartDataForMedalsByCountry();
+  globalStats$ = this.olympicService.getGlobalStats();
 
   constructor(private olympicService: OlympicService) {}
 }
