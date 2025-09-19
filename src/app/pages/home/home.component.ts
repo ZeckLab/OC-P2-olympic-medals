@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable, of, tap } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Olympic } from 'src/app/core/models/Olympic';
-import { PieChartMedalsByCountryComponent } from './pie-chart-medals-by-country/pie-chart-medals-by-country.component';
 
 @Component({
     selector: 'app-home',
@@ -10,24 +9,10 @@ import { PieChartMedalsByCountryComponent } from './pie-chart-medals-by-country/
     styleUrls: ['./home.component.scss'],
     standalone: false
 })
-export class HomeComponent implements OnInit {
-  public olympics$: Observable<Olympic[] | null> = of(null);
-  public olympicsData: Olympic[] = [];
-
+export class HomeComponent {
+  pieDataMedalsByCountry$ = this.olympicService.getPieDataMedalsByCountry();
+  countryCount$ = this.olympicService.getCountryCount();
+  participationCount$ = this.olympicService.getParticipationCount();
 
   constructor(private olympicService: OlympicService) {}
-
-  ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-    this.loadOlympics();
-  }
-
-  private loadOlympics(): void {
-  this.olympics$?.subscribe((data) => {
-    if (data) {
-      this.olympicsData = data;
-    }
-  });
-}
-
 }

@@ -15,10 +15,27 @@
   </p>
 </section>
 
+<section class="home-summary">
+  <h2>Medals per Country</h2>
+  <div class="summary-content">
+    <div class="particpation-count">
+      <span class="label">Number of JOs</span>
+      <span class="value">{{ participationCount$ | async }}</span>
+    </div>
+    <div class="country-count">
+      <span class="label">Number of countries</span>
+      <span class="value">{{ countryCount$ | async }}</span>
+    </div>
+  </div>
+</section>
+
 <section class="home-chart">
-  @if(olympicsData.length > 0) {
-  <app-pie-chart-medals-by-country [data]="olympicsData" />
+  <ng-container *ngIf="pieDataMedalsByCountry$ | async as pieData">
+  @if (pieData.length > 0) {
+    <app-pie-chart-medals-by-country [pieDataMedalsByCountry]="pieData" />
   } @else {
-  <p class="home-error">Un problème est survenu dans le chargement des données.</p>
+    <p class="home-error">Aucune donnée disponible pour le graphique.</p>
   }
+</ng-container>
+
 </section>
