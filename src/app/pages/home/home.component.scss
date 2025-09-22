@@ -1,22 +1,21 @@
 .home-intro {
   background-color: #f5f5f5;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 
   h1 {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     text-align: center;
   }
 
   p {
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.5;
     color: #333;
-    margin-bottom: 1rem;
-    max-width: 600px;
-    margin: 1rem auto;
+    max-width: 650px;
+    margin: 1rem auto 0 auto;
     text-align: center;
 
     strong {
@@ -30,15 +29,14 @@
     font-size: 1rem;
   }
 
-  @media (max-width: 768px) {
-    padding: 1rem;
-
+  @media (max-width: 1024px) {
     h1 {
       font-size: 1.6rem;
     }
 
     p {
-      font-size: 1rem;
+      line-height: 1.5;
+      margin: 0.75rem auto 0 auto;
     }
 
     .home-click-instruction {
@@ -46,17 +44,26 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
+    padding: 0.5rem 0.75rem;
+
     h1 {
       font-size: 1.4rem;
+      margin-bottom: 0.75rem;
     }
 
     p {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .home-click-instruction {
       font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.2rem;
     }
   }
 }
@@ -67,13 +74,13 @@
 
   h2 {
     display: inline-block;
-  padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem;
 
     font-size: 1.5rem;
     margin: 1.5rem 0;
     color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
     background-color: #04838f;
   }
 
@@ -84,11 +91,9 @@
     flex-wrap: wrap;
 
     .stat-card {
-      font-size: 1.1rem;
-      color: #333;
       background-color: #ffffff;
       border: 2px solid #04838f;
-      border-radius: 8px;
+      border-radius: 0.5rem;
       padding: 0.5rem;
 
       h3 {
@@ -98,9 +103,33 @@
       }
 
       p {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: bold;
         color: black;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    h2 {
+      font-size: 1.2rem;
+      margin: 1rem 0 0.75rem 0;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .global-stats {
+      gap: 1rem;
+
+      .stat-card {
+        padding: 0.2rem 0.5rem;
+
+        h3 {
+          font-size: 0.9rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
       }
     }
   }
@@ -108,22 +137,6 @@
   @media (max-width: 768px) {
     h2 {
       font-size: 1.3rem;
-    }
-
-    .global-stats {
-      gap: 1rem;
-
-      .stat-card {
-        font-size: 1rem;
-
-        h3 {
-          font-size: 0.9rem;
-        }
-
-        p {
-          font-size: 1.1rem;
-        }
-      }
     }
   }
 
@@ -136,15 +149,14 @@
       gap: 0.5rem;
 
       .stat-card {
-        font-size: 0.9rem;
-        padding: 0.4rem;
+        padding: 0.2rem 0.4rem;
 
         h3 {
           font-size: 0.8rem;
         }
 
         p {
-          font-size: 1rem;
+          font-size: 0.9rem;
         }
       }
     }

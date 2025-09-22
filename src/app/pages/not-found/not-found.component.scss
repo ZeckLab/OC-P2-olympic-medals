@@ -1,7 +1,30 @@
 .center {
-  height: 75vh;
+  height: 50vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap : 2rem;
+
+  .back-link {
+    color: #04838f;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    line-height: 1;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin-left : 0.5rem;
+    
+    .back-link {
+      font-size: 0.95rem;
+      margin-right: 0.5rem;
+    }
+  }
 }

@@ -14,10 +14,18 @@ export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   // Holds Olympic data fetched from API. Null = not loaded or error.
   private olympics$ = new BehaviorSubject<Olympic[] | null>(null);
+  // Indicates if the loaded data is valid for generating charts
   private hasValidData$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {}
 
+  /**
+  * Loads Olympic data from the API.
+  * Validates the consistency of the data, updates internal observables,
+  * and handles errors gracefully if the request fails.
+  *
+  * @returns Observable<Olympic[] | null> - The Olympic data if valid, or null otherwise.
+  */
   loadInitialData() {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       map(olympics => {
@@ -35,14 +43,13 @@ export class OlympicService {
         // TODO: improve error handling
         console.error('An error occurred while loading Olympic data.', error);
         // can be useful to end loading state and let the user know something went wrong
-        this.hasValidData$.next(false);
         this.olympics$.next(null);
         return of(null);
       })
     );
   }
 
-  getOlympics() {
+  getOlympics() : Observable<Olympic[] | null> {
     return this.olympics$.asObservable();
   }
 
@@ -51,6 +58,14 @@ export class OlympicService {
   }
 
   // ******* New methods to get global stats and pie chart data *******
+  /**
+  * Computes global statistics from the Olympic dataset.
+  * Extracts the total number of countries and the number of participations
+  * from the first Olympic entry as the data is consistent.
+  *
+  * @returns Observable<GlobalStats> - Contains countryCount and participationCount,
+  * or default values (0) if an error occurs.
+  */
   getGlobalStats(): Observable<GlobalStats> {
     return this.getOlympics().pipe(
       filter((olympics): olympics is Olympic[] => olympics !== null),
@@ -63,6 +78,13 @@ export class OlympicService {
     );
   }
 
+  /**
+  * Generates pie chart data representing the total number of medals per country.
+  * Aggregates medal counts across all participations for each Olympic entry.
+  *
+  * @returns Observable<ChartData[]> - Array of chart data objects with country name and medal count,
+  * or an empty array if an error occurs.
+  */
   getPieChartDataForMedalsByCountry(): Observable<ChartData[]> {
     return this.getOlympics().pipe(
       filter((olympics): olympics is Olympic[] => olympics !== null),
@@ -84,6 +106,14 @@ export class OlympicService {
   }
 
   // ******* New methods to get country-specific stats and bar chart data *******
+  /**
+  * Retrieves aggregated statistics for a specific country based on Olympic data.
+  * Calculates total medals, total athletes, and number of participations.
+  *
+  * @param country - The name of the country to extract statistics for.
+  * @returns Observable<CountryStats> - Object containing medal count, athlete count, and participation count,
+  * or default values (0) if an error occurs.
+  */
   getCountryStats(country: string): Observable<CountryStats> {
     return this.getOlympics().pipe(
       filter((olympics): olympics is Olympic[] => olympics !== null),
@@ -109,6 +139,14 @@ export class OlympicService {
     );
   }
 
+  /**
+  * Generates bar chart data showing the number of medals won by a country across its participations.
+  * Each data point represents a year and the corresponding medal count.
+  *
+  * @param country - The name of the country to generate chart data for.
+  * @returns Observable<ChartData[]> - Array of chart entries with year and medal count,
+  * or an empty array if no data is found or an error occurs.
+  */
   getBarChartDataForCountryMedalsByParticipation(country: string): Observable<ChartData[]> {
     return this.getOlympics().pipe(
       filter((olympics): olympics is Olympic[] => olympics !== null),
@@ -131,6 +169,12 @@ export class OlympicService {
     );
   }
 
+  /**
+  * Checks whether a given country exists in the Olympic dataset.
+  *
+  * @param name - The name of the country to verify.
+  * @returns Observable<boolean> - True if the country is found, false otherwise or if an error occurs.
+  */
   countryExists(name: string): Observable<boolean> {
     return this.getOlympics().pipe(
       filter((olympics): olympics is Olympic[] => olympics !== null),
@@ -142,10 +186,24 @@ export class OlympicService {
     );
   }
 
-
+  /**
+  * Searches for Olympic data corresponding to a specific country.
+  *
+  * @param name - The name of the country to search for.
+  * @param olympics - The full Olympic dataset.
+  * @returns Olympic | undefined - The matching Olympic entry, or undefined if not found.
+  */
   private findCountryData(name: string, olympics: Olympic[]): Olympic | undefined {
     return olympics.find((olympic) => olympic.country.toLowerCase() === name.toLowerCase());
   }
+
+  /**
+  * Validates the consistency of the Olympic dataset.
+  * Ensures all countries have the same number of participations and matching years.
+  *
+  * @param olympics - The Olympic dataset to validate.
+  * @returns boolean - True if the data is consistent, false otherwise.
+  */
 
   private isConsistentData(olympics: Olympic[] | null): boolean {
     if (!olympics || olympics.length === 0) return false;

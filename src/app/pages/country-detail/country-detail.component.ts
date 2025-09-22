@@ -24,6 +24,7 @@ export class CountryDetailComponent implements OnInit {
   ngOnInit(): void {
     this.country = this.route.snapshot.paramMap.get('country') || '';
 
+    // Check if country exists; if not, navigate to Not Found page
     const countryExists$ = this.olympicService.countryExists(this.country).pipe(
       tap(exists => {
         if (!exists) {
@@ -33,6 +34,7 @@ export class CountryDetailComponent implements OnInit {
       shareReplay(1)
     );
 
+    // Only fetch data if country exists
     this.barDataForCountryMedalsByParticipation$ = countryExists$.pipe(
       switchMap(exists => exists ? this.olympicService.getBarChartDataForCountryMedalsByParticipation(this.country) : EMPTY)
     );

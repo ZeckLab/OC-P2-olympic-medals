@@ -28,17 +28,18 @@ export class PieChartMedalsByCountryComponent implements OnChanges {
     this.setResponsiveView(event.target.innerWidth);
   }
 
-  // Adjust chart size based on window width with min and max constraints
+  // Adjust chart size based on window width with min (320) and max (900) constraints
   setResponsiveView(width: number) {
     const chartWidth = Math.min(Math.max(width - 20, 320), 900);
     const chartHeight = Math.round(chartWidth * 0.57);
     this.view = [chartWidth, chartHeight];
   }
 
+  // On clicking a pie slice, navigate to the country detail page
   onSelect(event: any): void {
     const countryName = event?.name;
     if (countryName) {
-      const formatted = countryName.toLowerCase(); // ou encodeURIComponent si besoin
+      const formatted = countryName.toLowerCase();
       this.router.navigate(['/country-detail', formatted]);
     }
   }
