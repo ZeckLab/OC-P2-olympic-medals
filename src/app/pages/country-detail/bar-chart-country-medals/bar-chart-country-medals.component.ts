@@ -30,10 +30,10 @@ export class BarChartCountryMedalsComponent implements OnChanges {
     this.setResponsiveView(event.target.innerWidth);
   }
 
-  // Adjust chart size based on window width with min and max constraints
+  // Adjust chart size based on window width with min (320) and max (800) constraints
   setResponsiveView(width: number) {
-    const chartWidth = Math.min(Math.max(width - 20, 320), 900);
-    const chartHeight = Math.round(chartWidth * 0.57);
+    const chartWidth = Math.min(Math.max(width - 20, 320), 800);
+    const chartHeight = chartWidth < 768 ? Math.round(chartWidth * 0.6) : Math.round(chartWidth * 0.5);
     this.view = [chartWidth, chartHeight];
   }
 }
