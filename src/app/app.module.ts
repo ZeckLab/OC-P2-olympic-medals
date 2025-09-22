@@ -10,10 +10,11 @@ import { PieChartMedalsByCountryComponent } from './pages/home/pie-chart-medals-
 import { HeaderComponent } from './shared/header/header.component';
 import { CountryDetailComponent } from './pages/country-detail/country-detail.component';
 import { BarChartCountryMedalsComponent } from './pages/country-detail/bar-chart-country-medals/bar-chart-country-medals.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotFoundComponent, PieChartMedalsByCountryComponent, HeaderComponent, CountryDetailComponent, BarChartCountryMedalsComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgxChartsModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
