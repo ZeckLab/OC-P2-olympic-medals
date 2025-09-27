@@ -33,7 +33,6 @@ export class OlympicService {
         this.hasValidData$.next(isValid);
         if (!isValid) {
           console.error('The data is inconsistent and prevents chart generation.');
-          return null;
         }
 
         return olympics;

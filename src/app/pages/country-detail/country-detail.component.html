@@ -21,12 +21,15 @@
 </section>
 
 <section class="country-chart">
-  <ng-container *ngIf="barDataForCountryMedalsByParticipation$ | async as barData">
+  <ng-container *ngIf="barDataForCountryMedalsByParticipation$ | async as barData; else noData">
     <p>Medal breakdown by year</p>
     @if (barData.length > 0) {
     <app-bar-chart-country-medals [barDataCountryMedalsByParticipation]="barData" />
     } @else {
-    <p class="country-error">Aucune donnée disponible pour le graphique.</p>
+    <p class="country-error">No data available to generate the chart.</p>
     }
   </ng-container>
+  <ng-template #noData>
+      <p class="country-error">No data available to generate the chart.</p>
+  </ng-template>
 </section>

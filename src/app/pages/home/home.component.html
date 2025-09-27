@@ -1,10 +1,10 @@
 <section class="home-intro">
   <h1>Tableau de bord des Jeux Olympiques</h1>
- <!--<p>
+  <!--<p>
     Explorez les performances des pays lors des précédentes éditions des Jeux
     Olympiques grâce à ce tableau de bord interactif.
   </p>-->
- <p>
+  <p>
     Le graphique ci-dessous vous présente le
     <strong>nombre total de médailles remportées par chaque pays</strong>,
     toutes années confondues.
@@ -30,18 +30,19 @@
 </section>
 
 <section class="home-chart">
-  <ng-container *ngIf="hasData$ | async; else noData">
-    <ng-container *ngIf="pieDataMedalsByCountry$ | async as pieData">
-      @if (pieData.length > 0) {
-      <app-pie-chart-medals-by-country [pieDataMedalsByCountry]="pieData" />
-      } @else {
-      <p class="home-error">No data available to generate the chart .</p>
-      }
-    </ng-container>
+  <ng-container *ngIf="pieDataMedalsByCountry$ | async as pieData; else noData">
+    @if (pieData.length > 0) {
+      <ng-container *ngIf="isValid$ | async; else noValid">
+        <app-pie-chart-medals-by-country [pieDataMedalsByCountry]="pieData" />
+      </ng-container>
+      <ng-template #noValid>
+        <p class="home-error">The data is inconsistent and prevents chart generation.</p>
+      </ng-template>
+    } @else {
+      <p class="home-error">No data available to generate the chart.</p>
+    }
   </ng-container>
-
   <ng-template #noData>
-    <p class="home-error">The data is inconsistent and prevents chart generation.</p>
+      <p class="home-error">No data available to generate the chart.</p>
   </ng-template>
-
 </section>
